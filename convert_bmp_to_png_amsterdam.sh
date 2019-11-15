@@ -1,3 +1,4 @@
+echo Converting Amsterdam 
 #!/bin/bash
 
 # converts all *.jpg and *.bmp files to *.png and patches model.mtl

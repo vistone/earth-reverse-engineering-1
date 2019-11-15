@@ -1,8 +1,9 @@
+echo Converting Enschede 
 #!/bin/bash
 
 # converts all *.jpg and *.bmp files to *.png and patches model.mtl
 
-dir="./downloaded_files/Brussel"
+dir="./downloaded_files/new/Brussel"
 test $(find "$dir" -type d | head -n 1) || exit 1
 
 # subdirectory (optional)

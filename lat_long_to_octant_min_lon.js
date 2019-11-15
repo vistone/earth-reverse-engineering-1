@@ -49,7 +49,7 @@ async function run() {
         let init_foundOctants = await latLongToOctant(lat, -lon, MAX_LEVEL);
         var match=0;
         for (let octantLevel in init_foundOctants) {
-            console.log('octantLevel=' + octantLevel + ' #octants=' + init_foundOctants[octantLevel].octants.length);
+//            console.log('octantLevel=' + octantLevel + ' #octants=' + init_foundOctants[octantLevel].octants.length);
             if (octantLevel === '17') match=1;
         }
 
@@ -145,7 +145,7 @@ async function run() {
                         set_sub=1;
                         row=row+line_end+' ';
 //columns
-//                        console.log(line_end+'-21');
+                        console.log(line_end+'-21');
 
                         row_cc=row_cc+"\""+line_end+"\""
 //                        console.log(line_start+" ("+line_end+")" );
@@ -167,7 +167,11 @@ async function run() {
 //                console.log( sub_line );
             }
             row_cc=row_cc+"};";
-            console.log('octants['+lat_count+']=new std::string['+num_lons+'] '+row_cc);
+
+//C++
+//            console.log('octants['+lat_count+']=new std::string['+num_lons+'] '+row_cc);
+
+
 //            console.log('octants['+lat_count+']='+row_cc);
             prev_line=sub_line;
             sub_line='';

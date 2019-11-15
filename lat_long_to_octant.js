@@ -22,12 +22,12 @@ async function run() {
 	if ([lat, lon].includes(undefined)) {
 
 //Brussel
-/*
+
 	let lat0=50.921315;
 	let lon0= 4.223007;
 	let lat1=50.809327;
 	let lon1= 4.538091;
-*/
+
 //LA use lat_long_to_octant_min_lon.js for this one (western north hemisphere)
 /*
 	let lat0=34.081049;
@@ -45,12 +45,12 @@ async function run() {
 */
 
 //amsterdam
-
+/*
         let lat0=52.439745;
         let lon0= 4.750032;
         let lat1=52.286213;
         let lon1= 5.032107;
-
+*/
         let [lat, lon] = [lat1, lon0];
         [lat, lon] = [parseFloat(lat), parseFloat(lon)];
 

@@ -8,7 +8,8 @@ const decodeTexture = require('./lib/decode-texture');
 const PLANET = 'earth';
 const URL_PREFIX = `https://kh.google.com/rt/${PLANET}/`;
 const DL_DIR = './downloaded_files';
-const [DUMP_NEW_DIR,DUMP_NEW_DIR1,DUMP_NEW_DIR2,DUMP_NEW_DIR3, DUMP_OBJ_DIR, DUMP_JSON_DIR, DUMP_RAW_DIR] = ['new','new/Enschede','LA','new/Amsterdam', 'obj', 'json', 'raw'].map(x => path.join(DL_DIR, x));
+const [ DUMP_NEW_DIR,		DUMP_NEW_DIR_BRUSSEL,		DUMP_NEW_DIR_ENSCHEDE,		DUMP_NEW_DIR_LA,		DUMP_NEW_DIR_AMSTERDAM,		DUMP_OBJ_DIR,		DUMP_JSON_DIR,		DUMP_RAW_DIR	] =
+	  [	'new',			  	'new/Brussel',	  			'new/Enschede',	  			'new/LA',				'new/Amsterdam',			'obj',				'json',				'raw' 		  	].map(x => path.join(DL_DIR, x));
 const { OCTANTS, MAX_LEVEL, DUMP_JSON, DUMP_RAW, PARALLEL_SEARCH } = require('./lib/parse-command-line')(__filename);
 const DUMP_OBJ = !(DUMP_JSON || DUMP_RAW);
 /****************************************************************/
@@ -23,31 +24,21 @@ async function pathExists (pad) {
 }
 
 async function run() {
-	const objDir = path.join(DUMP_OBJ_DIR, `${OCTANTS.join('+')}-${MAX_LEVEL}`);
-	const newDir1 = path.join(DUMP_NEW_DIR1, `${OCTANTS.join('+')}-${MAX_LEVEL}`);
-	const newDir2 = path.join(DUMP_NEW_DIR2, `${OCTANTS.join('+')}-${MAX_LEVEL}`);
-	const newDir3 = path.join(DUMP_NEW_DIR3, `${OCTANTS.join('+')}-${MAX_LEVEL}`);
-	const newDir = path.join(DUMP_NEW_DIR, `${OCTANTS.join('+')}-${MAX_LEVEL}`);
+	const newDir  			= path.join(DUMP_NEW_DIR, 				`${OCTANTS.join('+')}-${MAX_LEVEL}`);
+	const newDir_BRUSSEL 	= path.join(DUMP_NEW_DIR_BRUSSEL, 		`${OCTANTS.join('+')}-${MAX_LEVEL}`);
+	const newDir_ENSCHEDE	= path.join(DUMP_NEW_DIR_ENSCHEDE,		`${OCTANTS.join('+')}-${MAX_LEVEL}`);
+	const newDir_LA			= path.join(DUMP_NEW_DIR_LA, 			`${OCTANTS.join('+')}-${MAX_LEVEL}`);
+	const newDir_AMSTERDAM  = path.join(DUMP_NEW_DIR_AMSTERDAM,		`${OCTANTS.join('+')}-${MAX_LEVEL}`);
+	const objDir			= path.join(DUMP_OBJ_DIR,				`${OCTANTS.join('+')}-${MAX_LEVEL}`);
 
 	if (DUMP_OBJ) {
-		if (fs.existsSync(objDir)) {
-			console.log('exists in obj: ' + objDir);
-			return;
-		} else if (fs.existsSync(newDir1) ) {
-			console.log('exists in Enschede: ' + newDir1);
-			return;
-		} else if (fs.existsSync(newDir2) ) {
-			console.log('exists in LA: ' + newDir2);
-			return;
-		} else if (fs.existsSync(newDir3) ) {
-			console.log('exists in Amsterdam: ' + newDir3);
-			return;
-		} else if (fs.existsSync(newDir) ) {
-			console.log('exists in new: ' + newDir);
-			return;
-		} else {
-			console.log('not exist: ' + objDir);
-		}
+			 if (fs.existsSync(newDir) )			{	console.log('exists in: ' + newDir);			return;		}
+		else if (fs.existsSync(newDir_BRUSSEL) ) 	{	console.log('exists in: ' + newDir_BRUSSEL);	return;		}
+		else if (fs.existsSync(newDir_ENSCHEDE) ) 	{	console.log('exists in: ' + newDir_ENSCHEDE);	return;		}
+		else if (fs.existsSync(newDir_LA) ) 		{	console.log('exists in: ' + newDir_LA);			return;		}
+		else if (fs.existsSync(newDir_AMSTERDAM) ) 	{	console.log('exists in: ' + newDir_AMSTERDAM);	return;		}
+		else if (fs.existsSync(objDir)) 			{	console.log('exists in: ' + objDir);			return;		}
+		else 										{	console.log('not exist: ' + objDir);	}
 	}
 
 	const planetoid = await getPlanetoid();
@@ -63,7 +54,7 @@ async function run() {
 
 	let octants = 0;
 
-	const search = initNodeSearch(rootEpoch, PARALLEL_SEARCH ? 16 : 1,
+	const search = initNodeSearch(rootEpoch, PARALLEL_SEARCH ? 8 : 1,
 		function nodeFound(path) {
 			console.log('found     ', path);
 			octants++;
